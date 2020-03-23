@@ -21,7 +21,7 @@ class _CasesState extends State<Cases> {
 
     for(var c in jsonData)
     {
-      Corona corona = Corona(c["case_no"], c["date"], c["age"], c["gender"], c["nationality"], c["hospital_admitted_to"], c["had_recent_travel_history_abroad"], c["status"], c["notes"]);
+      Corona corona = Corona(c["case_no"], c["date"], c["gender"], c["nationality"], c["hospital_admitted_to"], c["had_recent_travel_history_abroad"], c["status"], c["other_information"]);
       
       casess.add(corona);
       
@@ -62,14 +62,31 @@ class _CasesState extends State<Cases> {
                       new Image.asset("assets/images/china.png") : snapshot.data[index].nationality == 'American' ?
                       new Image.asset("assets/images/usa.png") : new Image.asset("assets/images/china.png")),
                     ),
-                    trailing: Badge(
+                    trailing: 
+                    snapshot.data[index].status == 'Died' ? 
+                    Badge(
+                      badgeColor: Colors.redAccent,
+                      shape: BadgeShape.square,
+                      borderRadius: 20,
+                      toAnimate: false,
+                      badgeContent:
+                          Text('Deceased', style: TextStyle(color: Colors.white)),
+                      ) : snapshot.data[index].status == 'Admitted' ? 
+                      Badge(
                       badgeColor: Colors.blueAccent,
                       shape: BadgeShape.square,
                       borderRadius: 20,
                       toAnimate: false,
                       badgeContent:
                           Text('${snapshot.data[index].status}', style: TextStyle(color: Colors.white)),
-                    ),
+                      ) : Badge(
+                      badgeColor: Colors.green,
+                      shape: BadgeShape.square,
+                      borderRadius: 20,
+                      toAnimate: false,
+                      badgeContent:
+                          Text('${snapshot.data[index].status}', style: TextStyle(color: Colors.white)),
+                      ), 
                     title: Text('Case No. ${snapshot.data[index].case_no}'),
                     subtitle: Text('Nationality: ${snapshot.data[index].nationality}',),
                     onTap: () {
@@ -104,7 +121,7 @@ class DetailsPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
-        child: Text('\n Case No: ${corona.case_no}\n Date: ${corona.date}\n Gender: ${corona.gender} \n Nationality: ${corona.nationality}\n Admitted to:\n ${corona.hospital_admitted_to}\n Travel History: ${corona.had_recent_travel_history_abroad}\n Status: ${corona.status}\n Notes:\n ${corona.notes}',
+        child: Text('\n Case No: ${corona.case_no}\n Date: ${corona.date}\n Gender: ${corona.gender} \n Nationality: ${corona.nationality}\n Admitted to:\n ${corona.hospital_admitted_to}\n Travel History: ${corona.had_recent_travel_history_abroad}\n Status: ${corona.status}\n Other Info:\n ${corona.other_information}',
         style: TextStyle(fontSize: 18),
         ),
       ),
@@ -115,13 +132,23 @@ class DetailsPage extends StatelessWidget {
 class Corona {
   final int case_no;
   final String date;
-  final int age;
+  // final int age;
   final String gender;
   final String nationality;
   final String hospital_admitted_to;
   final String had_recent_travel_history_abroad;
   final String status;
-  final String notes;
+  final String other_information;
 
-  Corona(this.case_no, this.date, this.age, this.gender, this.nationality, this.hospital_admitted_to, this.had_recent_travel_history_abroad, this.status, this.notes);
+  Corona(
+    this.case_no, 
+    this.date, 
+    // this.age, 
+    this.gender, 
+    this.nationality, 
+    this.hospital_admitted_to, 
+    this.had_recent_travel_history_abroad, 
+    this.status, 
+    this.other_information
+  );
 }
