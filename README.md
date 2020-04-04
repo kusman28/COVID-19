@@ -1,6 +1,6 @@
-# covidph19
+# COVID-19 Tracker
 
-COVID-19 Tracker
+Zamboanga City
 
 ## Getting Started
 
