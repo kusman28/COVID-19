@@ -1,6 +1,6 @@
 # covidph19
 
-A new Flutter project.
+COVID-19 Tracker
 
 ## Getting Started
 
